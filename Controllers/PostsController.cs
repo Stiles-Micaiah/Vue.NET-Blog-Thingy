@@ -10,24 +10,33 @@ namespace NETBlog_Thingy.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class UsersController : ControllerBase
+  public class PostsController : ControllerBase
   {
 
-    private readonly UserRepository _Repo;
+    private readonly PostRepository _Repo;
 
-    public UsersController(UserRepository Repo)
+    public PostsController(PostRepository Repo)
     {
       _Repo = Repo;
     }
-    // // GET api/values
-    // [HttpGet]
-    // public ActionResult<IEnumerable<User>> Get()
-    // {
-    // }
+    // GET api/values
+    [HttpGet]
+    public ActionResult<IEnumerable<Post>> Get()
+    {
+      try
+      {
+        return Ok(_Repo.GetAll());
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(e);
+      }
+    }
 
     // GET api/values/5
     [HttpGet("{id}")]
-    public ActionResult<User> Get(int id)
+    public ActionResult<Post> Get(int id)
     {
       try
       {
@@ -42,7 +51,7 @@ namespace NETBlog_Thingy.Controllers
 
     // POST api/values
     [HttpPost]
-    public ActionResult<User> Post([FromBody] User data)
+    public ActionResult<Post> Post([FromBody] Post data)
     {
       try
       {
@@ -57,7 +66,7 @@ namespace NETBlog_Thingy.Controllers
 
     // PUT api/values/5
     [HttpPut("{id}")]
-    public ActionResult<User> Put(int id, [FromBody] User data)
+    public ActionResult<Post> Put(int id, [FromBody] Post data)
     {
       return Ok(_Repo.Update(data));
     }
